@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Papertrail reporter</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src="https://cdn.socket.io/socket.io-1.0.0.js"></script>
+    <script src="/js/functionsWeb.js"></script>
+    <script src="/js/functionsExportLogs.js"></script>
+    <script src="/js/functionsCharts.js"></script>
+</head>
+
+<body style="font-size: 14px">
+<div id="pageContent"></div>
+</body>
+<script type="text/javascript">
+    $(() => {
+        $("#pageContent").load("/passModal.html", () => {
+            try {
+                params = JSON.parse(decodeURIComponent("<%= params %>"));
+            } catch (e) {
+                console.log('No parameters in URL');
+            }
+            let passInput = $('#passwordInput');
+            function sendPass() {
+                $.get('https://cs-csp-papertrail-reporter.herokuapp.com/checkPass' + '?pass=' + passInput.val(), data => {
+                    if (data === 'ok') {
+                        password = $('#passwordInput').val();
+                        loadContent();
+                    } else {
+                        $("#passError").html("Incorrect password.");
+                    }
+                });
+            }
+            passInput.keyup(function (event) {
+                if (event.which === 13)
+                    sendPass();
+            });
+            $('#sendPass').on('click', sendPass);
+        });
+    });
+</script>
+
+</html>
