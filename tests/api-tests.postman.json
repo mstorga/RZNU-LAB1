@@ -273,57 +273,6 @@
           }
         },
         {
-          "name": "Tournaments by Organiser with auth",
-          "event": [{
-            "listen": "test",
-            "script": {
-              "type": "text/javascript",
-              "exec": [
-                "var is200Response = responseCode.code === 200;",
-                "",
-                "tests['Response code is 200 OK'] = is200Response;",
-                "",
-                "if(is200Response){",
-                "    var responseJSON = JSON.parse(responseBody);",
-                "",
-                "    tests['Response contains \"tournaments\" property'] = responseJSON.hasOwnProperty('tournaments');",
-                "    tests['Response contains \"tournamentsCount\" property'] = responseJSON.hasOwnProperty('tournamentsCount');",
-                "    tests['tournamentsCount is an integer'] = Number.isInteger(responseJSON.tournamentsCount);",
-                "",
-                "    if(responseJSON.tournaments.length){",
-                "        var tournament = responseJSON.tournaments[0];",
-                "",
-                "        tests['Tournament has \"title\" property'] = tournament.hasOwnProperty('title');",
-                "        tests['Tournament has \"slug\" property'] = tournament.hasOwnProperty('slug');",
-                "        tests['Tournament has \"body\" property'] = tournament.hasOwnProperty('body');",
-                "        tests['Tournament has \"createdAt\" property'] = tournament.hasOwnProperty('createdAt');",
-                "        tests['Tournament has \"updatedAt\" property'] = tournament.hasOwnProperty('updatedAt');",
-                "        tests['Tournament has \"organiser\" property'] = tournament.hasOwnProperty('organiser');",
-                "    }",
-                "}",
-                ""
-              ]
-            }
-          }],
-          "request": {
-            "url": "http://localhost:3000/api/tournaments?organiser=mstorga",
-            "method": "GET",
-            "header": [{
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "X-Requested-With",
-                "value": "XMLHttpRequest"
-              },
-              {
-                "key": "Authorization",
-                "value": "Token {{token}}"
-              }
-            ]
-          }
-        },
-        {
           "name": "Create Tournament",
           "event": [{
             "listen": "test",
@@ -372,7 +321,7 @@
           }
         },
         {
-          "name": "Single Tournament by slug",
+          "name": "Tournament by slug",
           "event": [{
             "listen": "test",
             "script": {
@@ -462,154 +411,6 @@
       ]
     },
     {
-      "name": "Tournaments",
-      "item": [{
-          "name": "All Tournaments",
-          "event": [{
-            "listen": "test",
-            "script": {
-              "type": "text/javascript",
-              "exec": [
-                "var is200Response = responseCode.code === 200;",
-                "",
-                "tests['Response code is 200 OK'] = is200Response;",
-                "",
-                "if(is200Response){",
-                "    var responseJSON = JSON.parse(responseBody);",
-                "",
-                "    tests['Response contains \"tournaments\" property'] = responseJSON.hasOwnProperty('tournaments');",
-                "    tests['Response contains \"tournamentsCount\" property'] = responseJSON.hasOwnProperty('tournamentsCount');",
-                "    tests['tournamentsCount is an integer'] = Number.isInteger(responseJSON.tournamentsCount);",
-                "",
-                "    if(responseJSON.tournaments.length){",
-                "        var tournament = responseJSON.tournaments[0];",
-                "",
-                "        tests['Tournament has \"title\" property'] = tournament.hasOwnProperty('title');",
-                "        tests['Tournament has \"slug\" property'] = tournament.hasOwnProperty('slug');",
-                "        tests['Tournament has \"body\" property'] = tournament.hasOwnProperty('body');",
-                "        tests['Tournament has \"createdAt\" property'] = tournament.hasOwnProperty('createdAt');",
-                "        tests['Tournament has \"updatedAt\" property'] = tournament.hasOwnProperty('updatedAt');",
-                "        tests['Tournament has \"organiser\" property'] = tournament.hasOwnProperty('organiser');",
-                "    }",
-                "}",
-                ""
-              ]
-            }
-          }],
-          "request": {
-            "url": "http://localhost:3000/api/tournaments",
-            "method": "GET",
-            "header": [{
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "X-Requested-With",
-                "value": "XMLHttpRequest"
-              }
-            ]
-          }
-        },
-        {
-          "name": "Tournaments by Organiser",
-          "event": [{
-            "listen": "test",
-            "script": {
-              "type": "text/javascript",
-              "exec": [
-                "var is200Response = responseCode.code === 200;",
-                "",
-                "tests['Response code is 200 OK'] = is200Response;",
-                "",
-                "if(is200Response){",
-                "    var responseJSON = JSON.parse(responseBody);",
-                "",
-                "    tests['Response contains \"tournaments\" property'] = responseJSON.hasOwnProperty('tournaments');",
-                "    tests['Response contains \"tournamentsCount\" property'] = responseJSON.hasOwnProperty('tournamentsCount');",
-                "    tests['tournamentsCount is an integer'] = Number.isInteger(responseJSON.tournamentsCount);",
-                "",
-                "    if(responseJSON.tournaments.length){",
-                "        var tournament = responseJSON.tournaments[0];",
-                "",
-                "        tests['Tournament has \"title\" property'] = tournament.hasOwnProperty('title');",
-                "        tests['Tournament has \"slug\" property'] = tournament.hasOwnProperty('slug');",
-                "        tests['Tournament has \"body\" property'] = tournament.hasOwnProperty('body');",
-                "        tests['Tournament has \"createdAt\" property'] = tournament.hasOwnProperty('createdAt');",
-                "        tests['Tournament has \"updatedAt\" property'] = tournament.hasOwnProperty('updatedAt');",
-                "        tests['Tournament has \"organiser\" property'] = tournament.hasOwnProperty('organiser');",
-                "    }",
-                "}",
-                ""
-              ]
-            }
-          }],
-          "request": {
-            "url": {
-              "raw": "http://localhost:3000/api/tournaments?organiser=mstorga",
-              "host": [
-                "http://localhost:3000/api"
-              ],
-              "path": [
-                "tournaments"
-              ],
-              "query": [{
-                "key": "organiser",
-                "value": "mstorga"
-              }],
-              "variable": []
-            },
-            "method": "GET",
-            "header": [{
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "X-Requested-With",
-                "value": "XMLHttpRequest"
-              }
-            ]
-          }
-        },
-        {
-          "name": "Single Tournament by slug",
-          "event": [{
-            "listen": "test",
-            "script": {
-              "type": "text/javascript",
-              "exec": [
-                "var responseJSON = JSON.parse(responseBody);",
-                "",
-                "tests['Response contains \"tournament\" property'] = responseJSON.hasOwnProperty('tournament');",
-                "",
-                "var tournament = responseJSON.tournament || {};",
-                "",
-                "tests['Tournament has \"title\" property'] = tournament.hasOwnProperty('title');",
-                "tests['Tournament has \"slug\" property'] = tournament.hasOwnProperty('slug');",
-                "tests['Tournament has \"body\" property'] = tournament.hasOwnProperty('body');",
-                "tests['Tournament has \"createdAt\" property'] = tournament.hasOwnProperty('createdAt');",
-                "tests['Tournament has \"updatedAt\" property'] = tournament.hasOwnProperty('updatedAt');",
-                "tests['Tournament has \"organiser\" property'] = tournament.hasOwnProperty('organiser');",
-                ""
-              ]
-            }
-          }],
-          "request": {
-            "url": "http://localhost:3000/api/tournaments/{{slug}}",
-            "method": "GET",
-            "header": [{
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "X-Requested-With",
-                "value": "XMLHttpRequest"
-              }
-            ]
-          }
-        }
-      ]
-    },
-    {
       "name": "Wins",
       "item": [{
           "name": "All Wins for Tournament",
@@ -673,6 +474,9 @@
                 "var win = responseJSON.win || {};",
                 "",
                 "tests['Win has \"id\" property'] = win.hasOwnProperty('id');",
+                "if(tests['Win has \"id\" property']){",
+                "    postman.setEnvironmentVariable('winid', win.id);",
+                "}",
                 "tests['Win has \"body\" property'] = win.hasOwnProperty('body');",
                 "tests['Win has \"createdAt\" property'] = win.hasOwnProperty('createdAt');",
                 "tests['Win has \"fighter\" property'] = win.hasOwnProperty('fighter');",
@@ -700,26 +504,6 @@
               "mode": "raw",
               "raw": "{\"win\":{\"body\":\"Thank you so much!\"}}"
             }
-          }
-        },
-        {
-          "name": "Delete Win for Tournament",
-          "request": {
-            "url": "http://localhost:3000/api/tournaments/{{slug}}/wins/1",
-            "method": "DELETE",
-            "header": [{
-                "key": "Content-Type",
-                "value": "application/json"
-              },
-              {
-                "key": "X-Requested-With",
-                "value": "XMLHttpRequest"
-              },
-              {
-                "key": "Authorization",
-                "value": "Token {{token}}"
-              }
-            ]
           }
         }
       ]
@@ -753,7 +537,7 @@
             }
           }],
           "request": {
-            "url": "http://localhost:3000/api/profiles/mstorga",
+            "url": "http://localhost:3000/api/users/mstorga",
             "method": "GET",
             "header": [{
                 "key": "Content-Type",
@@ -794,7 +578,47 @@
             }
           ]
         }
-      }]
+      },
+        {
+          "name": "Delete Win for Tournament",
+          "request": {
+            "url": "http://localhost:3000/api/tournaments/{{slug}}/wins/{{winid}}",
+            "method": "DELETE",
+            "header": [{
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest"
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "url": "http://localhost:3000/api/user",
+            "method": "DELETE",
+            "header": [{
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+              {
+                "key": "X-Requested-With",
+                "value": "XMLHttpRequest"
+              },
+              {
+                "key": "Authorization",
+                "value": "Token {{token}}"
+              }
+            ]
+          }
+        }]
     }
   ]
 }

@@ -13,13 +13,40 @@ User
 --Update User PUT http://localhost:3000/api/user
     -Update korisnika, u body-u se šalju izmjenjeni atributi korisnika a u headeru token
     -U odgovoru se dobije ažurirani korisnik ili 401 Unauthorized
---TODO: DELETE
+--Profile GET http://localhost:3000/api/users/{{username}}
+    --U headeru token
+    --U odgovoru profil usera
+--Delete User DELETE http://localhost:3000/api/user
+    --U headeru token
+    --U odgovoru 204 No Content
 
-Tournaments with auth
+Tournaments
 --All Tournaments GET http://localhost:3000/api/tournaments
     -U headeru se šalje token
     -U odgovoru se dobije lista turnira
--Tournaments by Fighter GET http://localhost:3000/api/tournaments?fighter={username}
+--Tournaments by Organiser GET http://localhost:3000/api/tournaments?organiser={username}
     -U headeru se šalje token a kao parametar ime organizatora
     -U odgovoru se dobije lista turnira ovog organizatora
+--Create Tournament POST http://localhost:3000/api/tournaments
+    -U headeru se šalje token, u body-u turnir
+    -U odgovoru se dobije 401 ili kreirani turnir
+--Tournament by slug GET http://localhost:3000/api/tournaments/{{slug}}
+    -U headeru token
+    -U odgovoru turnir
+--Update Tournament PUT http://localhost:3000/api/tournaments/{{slug}}
+    -U headeru token, u body-a izmjenjeni atributi turnira
+    -U odgovoru turnir
+--Delete Tournament DELETE http://localhost:3000/api/tournaments/{{slug}}
+    -U headeru token
+    -odgovor 204 No Content
 
+Wins
+--All Wins for Tournament GET http://localhost:3000/api/tournaments/{{slug}}/wins
+    -U headeru token
+    -u odgovoru lista pobjeda
+--Create Win Tournament POST http://localhost:3000/api/tournaments/{{slug}}/wins
+    -U headeru token, u body-u pobjeda
+    -u odgovoru nova pobjeda
+--Delete Win for Tournament DELETE http://localhost:3000/api/tournaments/{{slug}}/wins/{{num}}
+    -u headeru token
+    -u odgovoru 204 No Content

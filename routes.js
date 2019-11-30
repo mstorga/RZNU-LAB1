@@ -55,7 +55,6 @@ router.param('win', function (req, res, next, id) {
     }).catch(next);
 });
 
-//dokumentirano
 router.get('/api/user', auth.required, function (req, res, next) {
     User.findById(req.payload.id).then(function (user) {
         if (!user)
@@ -64,7 +63,14 @@ router.get('/api/user', auth.required, function (req, res, next) {
     }).catch(next);
 });
 
-//dokumentirano
+router.delete('/api/user', auth.required, function (req, res, next) {
+    User.findById(req.payload.id).then(function (user) {
+        if (!user)
+            return res.sendStatus(401);
+        return user.remove().then(() => res.sendStatus(204));
+    }).catch(next);
+});
+
 router.put('/api/user', auth.required, function (req, res, next) {
     User.findById(req.payload.id).then(function (user) {
         if (!user)
@@ -82,7 +88,6 @@ router.put('/api/user', auth.required, function (req, res, next) {
     }).catch(next);
 });
 
-//dokumentirano
 router.post('/api/users/login', function (req, res, next) {
     if (!req.body.user.email)
         return res.status(422).json({errors: {email: "can't be blank"}});
@@ -99,7 +104,6 @@ router.post('/api/users/login', function (req, res, next) {
     })(req, res, next);
 });
 
-//dokumentirano
 router.post('/api/users', function (req, res, next) {
     const user = new User();
     user.username = req.body.user.username;
@@ -109,7 +113,18 @@ router.post('/api/users', function (req, res, next) {
     ).catch(next);
 });
 
-router.get('/api/tournaments', auth.optional, function (req, res, next) {
+router.get('/api/users/:username', auth.optional, function (req, res, next) {
+    if (req.payload)
+        User.findById(req.payload.id).then(function (user) {
+            if (!user)
+                return res.json({profile: req.profile.toProfileJSONFor(false)});
+            return res.json({profile: req.profile.toProfileJSONFor(user)});
+        });
+    else
+        return res.json({profile: req.profile.toProfileJSONFor(false)});
+});
+
+router.get('/api/tournaments', auth.required, function (req, res, next) {
     const query = {};
     let limit = 20;
     let offset = 0;
@@ -234,25 +249,13 @@ router.delete('/api/tournaments/:tournament/wins/:win', auth.required, function 
     if (req.win.fighter.toString() === req.payload.id.toString()) {
         req.tournament.wins.remove(req.win._id);
         req.tournament.save()
-            .then(win.find({_id: req.win._id}).remove().exec())
+            .then(Win.find({_id: req.win._id}).remove().exec())
             .then(function () {
                 res.sendStatus(204);
             });
     } else
         res.sendStatus(403);
 });
-
-router.get('/api/profiles/:username', auth.optional, function (req, res, next) {
-    if (req.payload)
-        User.findById(req.payload.id).then(function (user) {
-            if (!user)
-                return res.json({profile: req.profile.toProfileJSONFor(false)});
-            return res.json({profile: req.profile.toProfileJSONFor(user)});
-        });
-    else
-        return res.json({profile: req.profile.toProfileJSONFor(false)});
-});
-
 
 router.use(function (err, req, res, next) {
     if (err.name === 'ValidationError')
