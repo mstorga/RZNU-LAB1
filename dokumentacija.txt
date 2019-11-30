@@ -1,0 +1,25 @@
+User
+--Register POST http://localhost:3000/api/users
+    -Kreiranje korisnika, u body-u se šalje username, pass, email
+    -Generira se token
+    -U odgovoru se dobije kreirani korisnik
+--Login POST http://localhost:3000/api/users/login
+    -U body-u se šalje email i pass
+    -Generira se token
+    -U odgovoru se dobije korisnik ili 422 Unprocessable Entity + info
+--Current User GET http://localhost:3000/api/user
+    -U headeru se šalje token
+    -U odgovoru se dobije korisnik preko tokena ili 401 Unauthorized
+--Update User PUT http://localhost:3000/api/user
+    -Update korisnika, u body-u se šalju izmjenjeni atributi korisnika a u headeru token
+    -U odgovoru se dobije ažurirani korisnik ili 401 Unauthorized
+--TODO: DELETE
+
+Tournaments with auth
+--All Tournaments GET http://localhost:3000/api/tournaments
+    -U headeru se šalje token
+    -U odgovoru se dobije lista turnira
+-Tournaments by Fighter GET http://localhost:3000/api/tournaments?fighter={username}
+    -U headeru se šalje token a kao parametar ime organizatora
+    -U odgovoru se dobije lista turnira ovog organizatora
+
