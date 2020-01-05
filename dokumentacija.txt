@@ -47,6 +47,6 @@ Wins
 --Create Win Tournament POST http://localhost:3000/api/tournaments/{{slug}}/wins
     -U headeru token, u body-u pobjeda
     -u odgovoru nova pobjeda
---Delete Win for Tournament DELETE http://localhost:3000/api/tournaments/{{slug}}/wins/{{num}}
+--Delete Win for Tournament DELETE http://localhost:3000/api/tournaments/{{slug}}/wins/{{winid}}
     -u headeru token
     -u odgovoru 204 No Content
